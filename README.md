@@ -7,7 +7,6 @@ Automated building detection tools.
 
 **Output**: buildings in vector format (geojson), to be used in digital map products
 
-## Disclaimer
 Repository is work-in-progress, contact [jmargutt](mailto:jmargutti@redcross.nl) in case issues. 
 
 Soon to be added: 
@@ -18,6 +17,7 @@ Soon to be added:
 * `abd_utils` utility functions to download/process satellite images
 * `neat_eo` framework to train and run building detection models on images
 * `input` input/configuration files needed to run the rest
+
 ## Requirements:
 To download satellite images:
 * [Bing Maps account](https://docs.microsoft.com/en-us/bingmaps/getting-started/bing-maps-dev-center-help/creating-a-bing-maps-account)
