@@ -11,7 +11,7 @@ To download satellite images:
 2. [Bing Maps Key](https://docs.microsoft.com/en-us/bingmaps/getting-started/bing-maps-dev-center-help/getting-a-bing-maps-key)
 
 To run the building detection models:
-3. GPU with VRAM >= 8 GB
+1. GPU with VRAM >= 8 GB
 4. [NVIDIA GPU Drivers]
 
 ## Getting started
