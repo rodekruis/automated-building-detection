@@ -8,8 +8,8 @@ from PIL import Image
 @click.command()
 @click.option('--images', help='input directory')
 @click.option('--output', help='output directory')
-def ohsome2label_to_neateo(images, output):
-    """ convert tile images to neateo format """
+def main(images, output):
+    """ convert tile images to neat-eo format """
 
     os.makedirs(os.path.join(output), exist_ok=True)
     cover = pd.DataFrame()
@@ -34,5 +34,5 @@ def ohsome2label_to_neateo(images, output):
 
 
 if __name__ == '__main__':
-    ohsome2label_to_neateo()
+    main()
 

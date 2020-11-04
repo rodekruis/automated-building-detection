@@ -7,13 +7,12 @@ import csv
 import urllib
 import click
 import pandas as pd
-from api_keys import BING_API_KEY
 import geopandas as gpd
-from tiles import Tile, TileCollection
+from .tiles import Tile, TileCollection
 from shapely.geometry import box
-import yaml
-from PIL import Image
 import subprocess
+from dotenv import load_dotenv
+load_dotenv()
 
 
 def quadkey_to_url(quadKey, api_key):
@@ -65,7 +64,8 @@ def process_print(command_args):
 @click.option('--aoi', help='area of interest (vector format)')
 @click.option('--output', help='output directory')
 @click.option('--zoom', default=17, help='zoom level [default: 17]')
-def download_images(aoi, output, zoom):
+def main(aoi, output, zoom):
+    """ download tile images from Bing Maps API in a given AOI """
 
     # read AOI file
     gdf_aoi = gpd.read_file(aoi).iloc[0]
@@ -118,15 +118,14 @@ def download_images(aoi, output, zoom):
             previous_quadKey = quadKey
 
         # Get Tile URL
-        tile_url = quadkey_to_url(quadKey, BING_API_KEY)
+        tile_url = quadkey_to_url(quadKey, os.environ.get("BING_API_KEY"))
 
         # Retrieve image from old API
         image_name = os.path.join(outdir_img, f"{int(zoom_level)}.{tile_center_x}.{tile_center_y}.png")
         result = retrieve_bing_image_old_api(tile_url, image_name)
         if not result:
-            print(f'WARNING: failed to download image {image_name}')
-
+            print(f'WARNING: failed to download image {image_name}, check AOI')
 
 
 if __name__ == "__main__":
-    download_images()
+    main()

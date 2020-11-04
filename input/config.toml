@@ -1,0 +1,26 @@
+# Inputs
+[[channels]]
+  name   = "images"
+  bands = [1, 2, 3]
+
+# Outputs
+[[classes]]
+  title = "Background"
+  color = "transparent"
+
+[[classes]]
+  title = "Building"
+  color = "deeppink"
+
+# AI stuff
+[model]
+  nn = "Albunet"
+  loader = "SemSeg"
+  encoder = "resnet50"
+
+[train]
+  bs = 4
+  loss = "Lovasz"
+  da = {name="RGB", p=1.0}
+  optimizer = {name="Adam", lr=0.000025}
+  metrics = ["QoD"]

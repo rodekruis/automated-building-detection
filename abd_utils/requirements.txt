@@ -25,3 +25,5 @@ snuggs==1.4.7             # via ada_tools (setup.py), rasterio
 soupsieve==2.0.1          # via ada_tools (setup.py), beautifulsoup4
 tqdm==4.48.2              # via ada_tools (setup.py)
 dateparser==0.7.6
+python-dotenv==0.15.0
+pyGeoTile==1.0.6

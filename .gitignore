@@ -127,5 +127,6 @@ dmypy.json
 **.tiff
 **/coords.csv
 **/cover.csv
+**.pth
 
 
