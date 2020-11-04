@@ -1,2 +1,2 @@
-# aoutomated-building-detection
+# automated-building-detection
 Automated building detection tools
