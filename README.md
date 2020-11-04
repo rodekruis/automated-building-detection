@@ -24,20 +24,29 @@ docker exec -it automated-building-detection bash
 ### Manual Setup
 TBI
 
-### End-to-end example
-1. The area of interest (AOI) is defined in `input/AOI.geojson`; you can create your own using [geojson.io](http://geojson.io/)
+## End-to-end example
+This section explains how to predict buildings in a given area of interest (AOI). It uses as example [a small Dutch town](https://en.wikipedia.org/wiki/Giethoorn); to predict the buildings in another area, simply change the input AOI (you can create your own using e.g. [geojson.io](http://geojson.io/).
+Detailed explanation on the usage of the different commands is given in the subdirectories `abd_utils` and `neat_eo`.
+
 2. Add you Bing Maps Key in `abd_utils/src/abd_utils/.env` (the Docker container comes with [vim](https://www.vim.org/) pre-installed)
 3. Download the images of the AOI, divided in [tiles](https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames)
 ```
 download-images --aoi input/AOI.geojson --output images
 ```
-3. Convert the images in the format needed to run the building detection model
+3. Convert the images into the format needed to run the building detection model
 ```
 images-to-neo --images images --output neo-images
 ```
-3. Convert the images in the format needed to run the building detection model
+3. Run the building detection model 
 ```
 neo predict --config input/config.toml --dataset neo-images --cover neo-images/cover.csv --checkpoint input/neat-fullxview-epoch75.pth --out neo-predictions --metatiles --keep_borders
 ```
-
+3. Vectorize model output (from pixels to polygons)
+```
+neo vectorize --config input/config.toml --type Building --masks neo-predictions --out neo-predictions/buildings.geojson
+```
+3. Merge touching polygons, remove small artifacts, simplify geometry
+```
+filter-buildings --data neo-predictions/buildings.geojson --dest neo-predictions/buildings-clean.geojson
+```
 
