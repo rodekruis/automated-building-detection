@@ -8,6 +8,7 @@ import click
 @click.option('--crsmeters', default='EPSG:4087', help='CRS in unit meters, to filter small buildings [default: EPSG:4087]')
 @click.option('--area', default=10, help='minimum building area, in m2 [default: 10]')
 def main(data, dest, crsmeters, area):
+    """ merge touching buildings, filter small ones, simplify geometry """
 
     gdf = gpd.read_file(data)
     crs_original = gdf.crs

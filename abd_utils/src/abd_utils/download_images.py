@@ -65,7 +65,7 @@ def process_print(command_args):
 @click.option('--output', help='output directory')
 @click.option('--zoom', default=17, help='zoom level [default: 17]')
 def main(aoi, output, zoom):
-    """ download tile images from Bing Maps API in a given AOI """
+    """ download tiled images from Bing Maps API in a given AOI """
 
     # read AOI file
     gdf_aoi = gpd.read_file(aoi).iloc[0]
