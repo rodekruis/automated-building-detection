@@ -3,7 +3,7 @@
 Scripts to download/transform satellite images.
 
 ### Usage
-1. `download-images`
+* `download-images`
 ```
 Usage: download-images [OPTIONS]
 
@@ -15,7 +15,7 @@ Options:
   --zoom INTEGER  zoom level [default: 17]
   --help          Show this message and exit.
   ```
-1. `images-to-neo`
+* `images-to-neo`
 ```
 Usage: images-to-neo [OPTIONS]
 
@@ -26,7 +26,7 @@ Options:
   --output TEXT  output directory
   --help         Show this message and exit.
   ```
-  1. `filter-buildings`
+* `filter-buildings`
 ```
 Usage: filter-buildings [OPTIONS]
 
