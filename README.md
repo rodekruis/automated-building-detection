@@ -7,7 +7,7 @@ Automated building detection tools.
 
 **Output**: buildings in vector format (geojson), to be used in digital map products
 
-Repository is work-in-progress, contact [jmargutt](mailto:jmargutti@redcross.nl) in case issues. 
+Repository is work-in-progress, contact [jmargutt](mailto:jmargutti@redcross.nl) in case of issues. 
 
 Soon to be added: 
 * detect buildings on "any" raster image 
