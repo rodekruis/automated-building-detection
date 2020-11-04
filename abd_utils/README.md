@@ -1,20 +1,42 @@
-# ADA data processing tools
+# automated building detection utilities
 
-Scripts to download/transform pre- and post-disaster images, adapted from 
-https://github.com/jmargutt/ADA_tools.
+Scripts to download/transform satellite images.
 
-### Major differences
+### Usage
+1. `download-images`
+```
+Usage: download-images [OPTIONS]
 
-- Data processing scripts moved one level up, directly into `ada_tools` folder
-- Added new entrypoints in `setup.py`:
-    
-    - `load-images`: get images from Maxar
-    - `filter-images`: filter images
-    - `filter-buildings`: filter buildings
-    - `final-layer`: final layer
-    - `prepare-data`: transform for damage classification (after building detection)
+  download tiled images from Bing Maps API in a given AOI
 
-    Run `<command> --help` to see available arguments.
+Options:
+  --aoi TEXT      area of interest (vector format)
+  --output TEXT   output directory
+  --zoom INTEGER  zoom level [default: 17]
+  --help          Show this message and exit.
+  ```
+1. `images-to-neo`
+```
+Usage: images-to-neo [OPTIONS]
+
+  convert tiled images to neat-eo format for building detection
+
+Options:
+  --images TEXT  input directory
+  --output TEXT  output directory
+  --help         Show this message and exit.
+  ```
+  1. `filter-buildings`
+```
+Usage: filter-buildings [OPTIONS]
+
+Options:
+  --data TEXT       input (vector format)
+  --dest TEXT       output (vector format)
+  --crsmeters TEXT  CRS in unit meters, to filter small buildings [default: EPSG:4087]
+  --area INTEGER    minimum building area, in m2 [default: 10]
+  --help            Show this message and exit.
+  ```
 
 
 ### Notes on installation
