@@ -3,7 +3,7 @@ Automated building detection tools.
 
 **Scope**: quickly map a large area to support disaster response operations
 
-**Input**: very high-resolution (<= 0.5 m/pixel) RGB satellite images from [Bing Maps](https://www.bing.com/maps/aerial)
+**Input**: very-high-resolution (<= 0.5 m/pixel) RGB satellite images from [Bing Maps](https://www.bing.com/maps/aerial)
 
 **Output**: buildings in vector format (geojson), to be used in digital map products
 
