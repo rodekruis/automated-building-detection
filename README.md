@@ -4,8 +4,7 @@ Automated building detection tools.
 ## Structure
 1. `abd_utils` utility functions to download/process satellite images
 2. `neat_eo` framework to train and run building detection models on images
-3. `input` configuration files that are needed
-
+3. `input` input/configuration files needed to run the rest
 ## Requirements:
 1. [Bing Maps account](https://docs.microsoft.com/en-us/bingmaps/getting-started/bing-maps-dev-center-help/creating-a-bing-maps-account)
 2. [Bing Maps Key](https://docs.microsoft.com/en-us/bingmaps/getting-started/bing-maps-dev-center-help/getting-a-bing-maps-key)
