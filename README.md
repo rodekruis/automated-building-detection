@@ -11,7 +11,7 @@ Automated building detection tools.
 Repository is work-in-progress, contact [jmargutt](mailto:jmargutti@redcross.nl) in case issues. 
 
 Soon to be added: 
-* detect buildings on any raster image 
+* detect buildings on "any" raster image 
 * re-train the model on known buildings
 
 ## Structure
