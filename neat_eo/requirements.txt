@@ -1,0 +1,16 @@
+requests==2.24.0
+albumentations==0.4.6
+mercantile==1.1.5
+numpy==1.19.1
+osmium==3.0.1
+Pillow==7.2.0
+psycopg2-binary==2.8.5
+rasterio==1.1.5
+scikit-build==0.11.1
+Shapely>=1.7.0
+supermercado==0.1.1
+toml==0.10.1
+torch==1.6.0
+torchvision==0.7.0
+tqdm==4.48.2
+webcolors==1.11.1

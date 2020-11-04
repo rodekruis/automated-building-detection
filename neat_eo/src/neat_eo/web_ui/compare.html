@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Neat-EO.pink Compare WebUI</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+</head>
+<body>
+    <div id="main" style="height: 100vh; font-family: sans-Serif">
+      <div id="help" style="font-size: 1.5em; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <h2>Neat-EO.pink Compare Side</h2>
+	<p><b>Shift</b> &nbsp; select or unselect, the current image.</p>
+	<p><b>Esc</b> &nbsp; &nbsp; copy selected images list, to clipboard.</p>
+	<p><b>h</b> &nbsp; &nbsp;  &nbsp;  &nbsp; hide or display, this help message.</p>
+	<p><b>&#8617;</b> &nbsp; &nbsp; &nbsp; &nbsp; previous image to compare, if any.</p>
+        <p><b>&#8618;</b> &nbsp; &nbsp; &nbsp; &nbsp; next image to compare, if any.</p>
+      </div>
+      <div id="clip" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+	<button id="cover" class="btn" data-clipboard-text="">Click me, to copy tiles cover to clipboard</button>
+      </div>
+      <div id="tile" style="z-index: -1; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+  <script>
+class XYZ 
+{ constructor(json) { this.fts = json["features"]; this.i = 0; this.sel = Array.apply(false, Array(this.fts.length)) }
+  get()     { var p = this.fts[this.i]["properties"]; return { x: p.x, y: p.y, z: p.z } }
+  next()    { if ((1 + this.i - this.fts.length) < 0) this.i++ ; return this.get(this.i) }
+  prev()    { if ((this.i - 1) >= 0) this.i-- ; return this.get(this.i) }
+  ping()    { this.sel[this.i] = this.sel[this.i] ? false : this.cover() }
+  is_sel()  { return this.sel[this.i] }
+  get_sel() { var sel = ""; for (var i in this.sel) { if (this.sel[i]) { sel += this.sel[i] + " \n" } } return sel }
+  path()    { var xyz = this.get(); return xyz.z + "/" + xyz.x + "/" + xyz.y }
+  cover()   { var xyz = this.get(); return xyz.x + "," + xyz.y + "," + xyz.z }
+}
+function load_json(url, callback)
+{ if (url == "") return; var x = new XMLHttpRequest(); x.overrideMimeType("application/json"); x.open("GET", url, true);
+  x.onreadystatechange = function(){ if (x.readyState == 4 && x.status == "200") callback(JSON.parse(x.responseText)) };
+  x.send(null); }
+
+function display(xyz, is_help)
+{ document.getElementById("tile").innerHTML = "<img id='image' src='{{base_url}}" + "/" + xyz.path() + ".{{ext}}' />";
+  if (xyz.is_sel()) { document.getElementById("image").style.border = "3px solid #cc0099" }
+               else { document.getElementById("image").style.border = "3px solid #ffffff" }; clip(false); help(is_help) }
+
+function help(on)
+{ if (on) { document.getElementById("help").style.display = "block"; document.getElementById("image").style.opacity = 0.1 }
+  else    { document.getElementById("help").style.display = "none";  document.getElementById("image").style.opacity = 1.0 } }
+
+function clip(on)
+{ if (on) { document.getElementById("clip").style.display = "block"; document.getElementById("image").style.opacity = 0.1 }
+  else    { document.getElementById("clip").style.display = "none";  document.getElementById("image").style.opacity = 1.0 } }
+
+load_json("tiles.json", function(json)
+{ xyz = new XYZ(json); document.addEventListener("keydown", (e) =>
+  {
+   if (e.key == "ArrowRight"){ xyz.next() ; display(xyz, false) }
+   if (e.key == "ArrowLeft") { xyz.prev() ; display(xyz, false) }
+   if (e.key == "Shift")     { xyz.ping() ; display(xyz, false) }
+   if (e.key == "h")         { clip(false); document.getElementById("help").style.display == "none" ? help(true) : help(false) }
+   if (e.key == "Escape")    { help(false); document.getElementById("cover").setAttribute("data-clipboard-text", xyz.get_sel());
+                                            document.getElementById("clip").style.display == "none" ? clip(true) : clip(false) }
+   }); display(xyz, true); new ClipboardJS('.btn');
+})
+  </script>
+</body>
+</html>

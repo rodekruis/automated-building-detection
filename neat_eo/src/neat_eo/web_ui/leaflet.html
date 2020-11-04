@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Neat-EO.pink Leaflet WebUI</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/geojson-vt@3.2.0/geojson-vt.js"></script>
+  <script src="https://unpkg.com/leaflet.vectorgrid@latest/dist/Leaflet.VectorGrid.js"></script>
+  <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+</head>
+<body>
+  <div id="mapid" style="width:100%; height:100vh;"></div>
+  <div id="clip" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <button id="cover" class="btn" data-clipboard-text="">Click me, to copy tiles cover to clipboard</button>
+  </div>
+  <script>
+function load_json(url, callback) {
+  if (url == '' ) return; var x = new XMLHttpRequest(); x.overrideMimeType("application/json"); x.open('GET', url, true);
+  x.onreadystatechange = function(){ if (x.readyState == 4 && x.status == "200") callback(JSON.parse(x.responseText)) };
+  x.send(null);
+};
+var map = L.map("mapid").setView({{center}}, {{zoom}});
+L.tileLayer("https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png", {maxZoom: {{zoom}}+3, opacity: 0.3}).addTo(map);
+L.tileLayer("{{base_url}}/{z}/{x}/{y}.{{ext}}", {maxZoom: {{zoom}}+3, maxNativeZoom: {{zoom}}}).addTo(map);
+
+var grid_style = { sliced: function(properties, zoom) {
+	return { "color": "deeppink", "opacity": 0.3, "fill": (zoom < {{zoom}}) ? true : false }}};
+load_json("{{tiles}}", function(grid){ L.vectorGrid.slicer(grid, {maxZoom: {{zoom}}+3,
+                                                           rendererFactory: L.canvas.tile,
+                                                           vectorTileLayerStyles: grid_style }).addTo(map)})
+new ClipboardJS('.btn');
+var xyz = Array();
+
+function latlon_to_tile(lat, lon, zoom){
+  var x = Math.floor((lon + 180) / 360*Math.pow(2, zoom));
+  var y = Math.floor((1 - Math.log(Math.tan(lat * Math.PI / 180) + 1 / Math.cos(lat * Math.PI / 180)) / Math.PI)
+          / 2 * Math.pow(2, zoom));
+  return [x, y, zoom] }
+
+function tile_to_latlon(x, y, z){
+  var lon = x / Math.pow(2, z) * 360 - 180;
+  var lat = (180 / Math.PI * Math.atan(0.5 * (Math.exp(Math.PI - 2 * Math.PI * y / Math.pow(2 , z))
+            - Math.exp(-(Math.PI-2 * Math.PI * y / Math.pow(2 , z))))));
+  return [Math.round(lat * Math.pow(10, 7)) / Math.pow(10, 7), Math.round(lon * Math.pow(10, 7)) / Math.pow(10, 7)] }
+
+function tile_to_bbox(x, y, z){
+  var p1 = tile_to_latlon(x, y, z);
+  var p2 = tile_to_latlon(x, y + 1, z);
+  var p3 = tile_to_latlon(x + 1, y + 1, z);
+  var p4 = tile_to_latlon(x + 1, y, z);
+  return [p1, p2, p3, p4] }
+
+map.on('click', function(e){
+  var tile = latlon_to_tile(e.latlng.lat, e.latlng.lng, {{zoom}});
+  var polygon = L.polygon(tile_to_bbox(tile[0], tile[1], tile[2]), {color: 'green'});
+  var index = tile.join(",");
+  if (xyz[index]) { map.removeLayer(xyz[index]); xyz[index] = false } else { map.addLayer(polygon); xyz[index] = polygon }
+})
+
+function clip(on)
+{ if (on) { document.getElementById("clip").style.display = "block"; document.getElementById("mapid").style.opacity = 0.1 }
+  else    { document.getElementById("clip").style.display = "none";  document.getElementById("mapid").style.opacity = 1.0 } }
+
+document.addEventListener("keydown", (e) => {
+  if (e.key == "Escape") { var sel = ""; for (var i in xyz) { if (xyz[i]) { sel += i + " \n" } };
+                           document.getElementById("cover").setAttribute("data-clipboard-text", sel);
+                           document.getElementById("clip").style.display == "none" ? clip(true) : clip(false) }
+})
+  </script>
+</body>
+</html>
