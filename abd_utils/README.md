@@ -30,6 +30,8 @@ Options:
 ```
 Usage: filter-buildings [OPTIONS]
 
+  merge touching buildings, filter small ones, simplify geometry
+
 Options:
   --data TEXT       input (vector format)
   --dest TEXT       output (vector format)
