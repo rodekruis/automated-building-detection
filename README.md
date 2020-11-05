@@ -16,7 +16,7 @@ Contact: [Jacopo Margutti](mailto:jmargutti@redcross.nl).
 
 ## Structure
 * `abd_utils` utility functions to download/process satellite images
-* `neat_eo` framework to train and run building detection models on images
+* `abd_model` framework to train and run building detection models on images
 * `input` input/configuration files needed to run the rest
 
 ## Requirements:
