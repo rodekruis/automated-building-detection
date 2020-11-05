@@ -1,4 +1,4 @@
-[![version: 0.0.0](https://img.shields.io/badge/stable-0.0.0-ED2E26.svg?style=flat-square)]
+[![version: 0.0.0](https://img.shields.io/badge/stable-0.0.0-ED2E26.svg?style=flat-square)](https://github.com/jmargutt/automated-building-detection)
 
 # automated-building-detection
 Automated Building Detection using Deep Learning, a NLRC/510 tool.
