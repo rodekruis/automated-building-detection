@@ -50,7 +50,7 @@ TBI
 ## End-to-end example
 How to use these tools? We take as example [a small Dutch town](https://en.wikipedia.org/wiki/Giethoorn); to predict the buildings in another area, simply change the input AOI (you can create your own using e.g. [geojson.io](http://geojson.io/)).
 
-Detailed explanation on usage and parameters of the different commands is given in the subdirectories `abd_utils` and `neat_eo`.
+Detailed explanation on usage and parameters of the different commands is given in the subdirectories `abd_utils` and `abd_model`.
 
 2. Add you Bing Maps Key in `abd_utils/src/abd_utils/.env` (the Docker container has [vim](https://www.vim.org/) pre-installed)
 3. Download the images of the AOI, divided in [tiles](https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames)
@@ -59,19 +59,19 @@ download-images --aoi input/AOI.geojson --output images
 ```
 3. Convert the images into the format needed to run the building detection model
 ```
-images-to-neo --images images --output neo-images
+images-to-model --images images --output abd-input
 ```
 3. [Download a pre-trained model](https://rodekruis.sharepoint.com/sites/510-Team/_layouts/15/guestaccess.aspx?docid=048f1927be4af4bc09805be0cfc376b22&authkey=AZSnVN8hrbj9CYSV8K-wg9o&expiration=2021-08-08T22%3A00%3A00.000Z&e=VIywGA) and add it to the `input` directory
 3. Run the building detection model 
 ```
-neo predict --config input/config.toml --dataset neo-images --cover neo-images/cover.csv --checkpoint input/neat-fullxview-epoch75.pth --out neo-predictions --metatiles --keep_borders
+abd predict --config input/config.toml --dataset abd-input --cover abd-input/cover.csv --checkpoint input/neat-fullxview-epoch75.pth --out abd-predictions --metatiles --keep_borders
 ```
 3. Vectorize model output (from pixels to polygons)
 ```
-neo vectorize --config input/config.toml --type Building --masks neo-predictions --out neo-predictions/buildings.geojson
+abd vectorize --config input/config.toml --type Building --masks neo-predictions --out abd-predictions/buildings.geojson
 ```
 3. Merge touching polygons, remove small artifacts, simplify geometry
 ```
-filter-buildings --data neo-predictions/buildings.geojson --dest neo-predictions/buildings-clean.geojson
+filter-buildings --data abd-predictions/buildings.geojson --dest abd-predictions/buildings-clean.geojson
 ```
 
