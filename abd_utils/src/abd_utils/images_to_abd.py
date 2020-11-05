@@ -11,7 +11,8 @@ from PIL import Image
 def main(images, output):
     """ convert tiled images to abd format for building detection """
 
-    os.makedirs(os.path.join(output), exist_ok=True)
+    os.makedirs(output, exist_ok=True)
+    os.makedirs(os.path.join(output, 'images'), exist_ok=True)
     cover = pd.DataFrame()
     list_tiles = os.listdir(images)
     list_tiles = [x for x in list_tiles if x.endswith(".png")]
@@ -30,7 +31,7 @@ def main(images, output):
                                         'y': y,
                                         'z': zoom}), ignore_index=True)
     # save cover
-    cover.to_csv(os.path.join(output, 'cover.csv'), header=False, index=False)
+    cover.to_csv(os.path.join(output, 'images', 'cover.csv'), header=False, index=False)
 
 
 if __name__ == '__main__':
