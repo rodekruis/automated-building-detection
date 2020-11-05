@@ -5,6 +5,7 @@ Automated Building Detection using Deep Learning, a NLRC/510 tool.
 
 **Input**: very-high-resolution (<= 0.5 m/pixel) RGB satellite images. Currently supported:
 * [Bing Maps](https://www.bing.com/maps/aerial)
+* Any custom image in raster format
 
 **Output**: buildings in vector format (geojson), to be used in digital map products
 
