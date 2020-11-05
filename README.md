@@ -31,7 +31,7 @@ To download satellite images:
 
 To run the building detection models:
 * GPU with VRAM >= 8 GB
-* [NVIDIA GPU Drivers](https://www.nvidia.com/Download/index.aspx)
+* [NVIDIA GPU Drivers](https://www.nvidia.com/Download/index.aspx) and [NVIDIA CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit)
 
 ## Getting started
 ### Using Docker
