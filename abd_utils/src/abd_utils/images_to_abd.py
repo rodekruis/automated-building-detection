@@ -9,7 +9,7 @@ from PIL import Image
 @click.option('--images', help='input directory')
 @click.option('--output', help='output directory')
 def main(images, output):
-    """ convert tiled images to neat-eo format """
+    """ convert tiled images to abd format for building detection """
 
     os.makedirs(os.path.join(output), exist_ok=True)
     cover = pd.DataFrame()

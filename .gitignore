@@ -128,5 +128,4 @@ dmypy.json
 **/coords.csv
 **/cover.csv
 **.pth
-
-
+**.env
