@@ -1,5 +1,5 @@
 # automated-building-detection
-Automated Building Detection using Deep Learning.
+Automated Building Detection using Deep Learning, a NLRC/510 tool.
 
 **Scope**: quickly map a large area to support disaster response operations
 
