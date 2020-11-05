@@ -1,5 +1,5 @@
 # automated-building-detection
-Automated building detection tools.
+Automated Building Detection using Deep Learning.
 
 **Scope**: quickly map a large area to support disaster response operations
 
@@ -7,11 +7,12 @@ Automated building detection tools.
 
 **Output**: buildings in vector format (geojson), to be used in digital map products
 
-Repository is work-in-progress, contact [jmargutt](mailto:jmargutti@redcross.nl) in case of issues. 
+## Credits
+Built on top of [robosat](https://github.com/mapbox/robosat) and [robosat.pink](https://github.com/acannistra/robosat.pink).
 
-Soon to be added: 
-* detect buildings on "any" raster image 
-* re-train the model on known buildings
+Development: [Ondrej Zacha](https://github.com/ondrejzacha), [Wessel de Jong](https://github.com/Wessel93), [Jacopo Margutti](mailto:jmargutti@redcross.nl)
+
+Contact: [Jacopo Margutti](mailto:jmargutti@redcross.nl).
 
 ## Structure
 * `abd_utils` utility functions to download/process satellite images
