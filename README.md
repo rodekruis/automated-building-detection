@@ -60,11 +60,11 @@ Detailed explanation on usage and parameters of the different commands is given 
 1. Add you Bing Maps Key in `abd_utils/src/abd_utils/.env` (the Docker container has [vim](https://www.vim.org/) pre-installed)
 2. Download the images of the AOI, divided in [tiles](https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames)
 ```
-download-images --aoi input/AOI.geojson --output images
+download-images --aoi input/AOI.geojson --output bing-images
 ```
 3. Convert the images into the format needed to run the building detection model
 ```
-images-to-abd --images images --output abd-input
+images-to-abd --images bing-images/images --output abd-input
 ```
 4. [Download a pre-trained model](https://rodekruis.sharepoint.com/sites/510-Team/_layouts/15/guestaccess.aspx?docid=048f1927be4af4bc09805be0cfc376b22&authkey=AZSnVN8hrbj9CYSV8K-wg9o&expiration=2021-08-08T22%3A00%3A00.000Z&e=VIywGA) (more details below) and add it to the `input` directory
 5. Run the building detection model 
