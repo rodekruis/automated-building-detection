@@ -4,9 +4,19 @@ Scripts to train and run building detection models. Built on top of [robosat.pin
 
 To make the package installable, `setup.py` has been adjusted, along with a rearranged file structure.
 
-## Readme from the original project:
+## Requirements:
+### NVIDIA GPU Drivers [mandatory for train and predict]
+```bash
+wget http://us.download.nvidia.com/XFree86/Linux-x86_64/435.21/NVIDIA-Linux-x86_64-435.21.run
+sudo sh NVIDIA-Linux-x86_64-435.21.run -a -q --ui=none
+```
 
-## Documentation:
+### HTTP Server [for WebUI rendering]
+```bash
+sudo apt install -y apache2 && sudo ln -s ~ /var/www/html/neo
+```
+
+## Usage:
 Tools:
 1. `abd cover` Generate a tiles covering, in csv format: X,Y,Z
 1. `abd download` Downloads tiles from a Web Server (XYZ or WMS)
@@ -21,18 +31,6 @@ Tools:
 1. `abd compare` Compute composite images and/or metrics to compare several slippy map dirs
 1. `abd vectorize` Vectorize output: extract GeoJSON features from predicted masks
 1. `abd info` Print neat-EO version informations
-
-## Requirements:
-### NVIDIA GPU Drivers [mandatory for train and predict]
-```bash
-wget http://us.download.nvidia.com/XFree86/Linux-x86_64/435.21/NVIDIA-Linux-x86_64-435.21.run
-sudo sh NVIDIA-Linux-x86_64-435.21.run -a -q --ui=none
-```
-
-### HTTP Server [for WebUI rendering]
-```bash
-sudo apt install -y apache2 && sudo ln -s ~ /var/www/html/neo
-```
 
 ## NOTES:
 1. Requires: Python 3.6 or 3.7
