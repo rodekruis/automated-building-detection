@@ -2,7 +2,7 @@
 [![style: PEP 8](https://img.shields.io/badge/style-PEP8-red?style=flat-square)](https://www.python.org/dev/peps/pep-0008/)
 
 # automated-building-detection
-Automated Building Detection using Deep Learning, a NLRC/510 tool.
+Automated Building Detection using Deep Learning: a NLRC/510 tool
 
 **Scope**: quickly map a large area to support disaster response operations
 
