@@ -52,20 +52,17 @@ docker exec -it automated-building-detection bash
 ### Manual Setup
 1. Install Python 3.7 and [pip](https://pypi.org/project/pip/)
 2. Install [Anaconda](https://www.anaconda.com/products/individual)
-3. Create a new Anaconda environment
+3. Create and activate a new Anaconda environment
 ```
 conda create --name abdenv python=3.7 
-```
-4. Activate it
-```
 conda activate abdenv
 ```
-5. From root directory, move to `abd_utils` and install
+4. From root directory, move to `abd_utils` and install
 ```
 cd abd_utils
 pip install .
 ```
-6. Move to `abd_model` and install
+5. Move to `abd_model` and install
 ```
 cd ../abd_model
 pip install .
