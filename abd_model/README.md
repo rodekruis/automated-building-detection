@@ -11,11 +11,6 @@ wget http://us.download.nvidia.com/XFree86/Linux-x86_64/435.21/NVIDIA-Linux-x86_
 sudo sh NVIDIA-Linux-x86_64-435.21.run -a -q --ui=none
 ```
 
-### HTTP Server [for WebUI rendering]
-```bash
-sudo apt install -y apache2 && sudo ln -s ~ /var/www/html/neo
-```
-
 ## Usage:
 Tools:
 1. `abd cover` Generate a tiles covering, in csv format: X,Y,Z
