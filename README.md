@@ -73,7 +73,7 @@ abd predict --config input/config.toml --dataset abd-input --cover abd-input/cov
 ```
 6. Vectorize model output (from pixels to polygons)
 ```
-abd vectorize --config input/config.toml --type Building --masks neo-predictions --out abd-predictions/buildings.geojson
+abd vectorize --config input/config.toml --type Building --masks abd-predictions --out abd-predictions/buildings.geojson
 ```
 7. Merge touching polygons, remove small artifacts, simplify geometry
 ```
