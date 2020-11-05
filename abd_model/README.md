@@ -1,6 +1,6 @@
 # automated-building-detection model
 
-Scripts to train and run building detection models. Built on top of [robosat.pink](https://github.com/dselivanov/robosat.pink).
+Scripts to train and run building detection models. Built on top of [robosat.pink](https://github.com/acannistra/robosat.pink).
 
 To make the package installable, `setup.py` has been adjusted, along with a rearranged file structure.
 
