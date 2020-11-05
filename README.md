@@ -1,5 +1,5 @@
-[![version: 0.0.0](https://img.shields.io/badge/stable-0.0.0-ED2E26.svg?style=flat-square)](https://github.com/jmargutt/automated-building-detection)
-[![style: PEP 8](https://img.shields.io/badge/style-PEP8-ED2E26.svg?style=flat-square)](https://www.python.org/dev/peps/pep-0008/)
+[![version: 0.0.0](https://img.shields.io/badge/stable-0.0.0-blue?style=flat-square)](https://github.com/jmargutt/automated-building-detection)
+[![style: PEP 8](https://img.shields.io/badge/style-PEP8-red?style=flat-square)](https://www.python.org/dev/peps/pep-0008/)
 
 # automated-building-detection
 Automated Building Detection using Deep Learning, a NLRC/510 tool.
