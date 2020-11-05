@@ -1,4 +1,4 @@
-# automated building detection utilities
+# automated-building-detection utilities
 
 Scripts to download/transform satellite images.
 
@@ -15,11 +15,11 @@ Options:
   --zoom INTEGER  zoom level [default: 17]
   --help          Show this message and exit.
   ```
-* `images-to-neo`
+* `images-to-abd`
 ```
-Usage: images-to-neo [OPTIONS]
+Usage: images-to-abd [OPTIONS]
 
-  convert tiled images to neat-eo format for building detection
+  convert tiled images to abd format for building detection
 
 Options:
   --images TEXT  input directory
