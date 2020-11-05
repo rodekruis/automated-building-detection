@@ -61,7 +61,7 @@ download-images --aoi input/AOI.geojson --output images
 ```
 images-to-model --images images --output abd-input
 ```
-4. [Download a pre-trained model](https://rodekruis.sharepoint.com/sites/510-Team/_layouts/15/guestaccess.aspx?docid=048f1927be4af4bc09805be0cfc376b22&authkey=AZSnVN8hrbj9CYSV8K-wg9o&expiration=2021-08-08T22%3A00%3A00.000Z&e=VIywGA) and add it to the `input` directory
+4. [Download a pre-trained model](https://rodekruis.sharepoint.com/sites/510-Team/_layouts/15/guestaccess.aspx?docid=048f1927be4af4bc09805be0cfc376b22&authkey=AZSnVN8hrbj9CYSV8K-wg9o&expiration=2021-08-08T22%3A00%3A00.000Z&e=VIywGA) (more details below) and add it to the `input` directory
 5. Run the building detection model 
 ```
 abd predict --config input/config.toml --dataset abd-input --cover abd-input/cover.csv --checkpoint input/neat-fullxview-epoch75.pth --out abd-predictions --metatiles --keep_borders
@@ -74,4 +74,9 @@ abd vectorize --config input/config.toml --type Building --masks neo-predictions
 ```
 filter-buildings --data abd-predictions/buildings.geojson --dest abd-predictions/buildings-clean.geojson
 ```
+
+## Model collection
+* [neat-fullxview-epoch75](https://rodekruis.sharepoint.com/sites/510-Team/_layouts/15/guestaccess.aspx?docid=048f1927be4af4bc09805be0cfc376b22&authkey=AZSnVN8hrbj9CYSV8K-wg9o&expiration=2021-08-08T22%3A00%3A00.000Z&e=VIywGA): 
+  * architecture: AlbuNet ([U-Net-like](https://arxiv.org/abs/1505.04597) encoder-decoder architecture with a ResNet, ResNext or WideResNet encoder)
+  * training: [xBD dataset](https://arxiv.org/pdf/1911.09296.pdf), 75 epochs
 
