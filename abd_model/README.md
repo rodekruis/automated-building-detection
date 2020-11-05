@@ -25,7 +25,7 @@ Tools:
 1. `abd predict` Predict masks, from a dataset, with an already trained model
 1. `abd compare` Compute composite images and/or metrics to compare several slippy map dirs
 1. `abd vectorize` Vectorize output: extract GeoJSON features from predicted masks
-1. `abd info` Print neat-EO version informations
+1. `abd info` Print abd-model version informations
 
 ## NOTES:
 1. Requires: Python 3.6 or 3.7
