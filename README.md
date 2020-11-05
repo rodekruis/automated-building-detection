@@ -67,7 +67,7 @@ pip install .
 cd ../abd_model
 pip install .
 ```
-N.B. Remember to activate `abdenv` for future usage
+N.B. Remember to activate `abdenv` next time
 
 ## End-to-end example
 How to use these tools? We take as example [a small Dutch town](https://en.wikipedia.org/wiki/Giethoorn); to predict the buildings in another area, simply change the input AOI (you can create your own using e.g. [geojson.io](http://geojson.io/)).
