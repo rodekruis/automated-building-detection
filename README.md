@@ -1,4 +1,4 @@
-[![version: 0.0.0](https://img.shields.io/badge/stable-0.0.0-blue?style=flat-square)](https://github.com/jmargutt/automated-building-detection)
+[![version: 0.0.0](https://img.shields.io/badge/stable-0.0.0-blue?style=flat-square)](https://github.com/rodekruis/automated-building-detection)
 [![style: PEP 8](https://img.shields.io/badge/style-PEP8-red?style=flat-square)](https://www.python.org/dev/peps/pep-0008/)
 
 # automated-building-detection
@@ -36,13 +36,13 @@ To run the building detection models:
 ## Getting started
 ### Using Docker
 1. Install [Docker](https://www.docker.com/get-started).
-2. Download the [latest Docker Image](https://hub.docker.com/r/jmargutti/automated-building-detection)
+2. Download the [latest Docker Image](https://hub.docker.com/r/rodekruis/automated-building-detection)
 ```
-docker pull jmargutti/automated-building-detection
+docker pull rodekruis/automated-building-detection
 ```
 3. Create a docker container and connect it to a local directory (`<path-to-your-workspace>`)
 ```
-docker run --name automated-building-detection -dit -v <path-to-your-workspace>:/ -p 5000:5000 jmargutti/automated-building-detection
+docker run --name automated-building-detection -dit -v <path-to-your-workspace>:/ -p 5000:5000 rodekruis/automated-building-detection
 ```
 4. Access the container
 ```
