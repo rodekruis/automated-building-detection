@@ -42,7 +42,7 @@ docker pull rodekruis/automated-building-detection
 ```
 3. Create a docker container and connect it to a local directory (`<path-to-your-workspace>`)
 ```
-docker run --name automated-building-detection -dit -v <path-to-your-workspace>:/ -p 5000:5000 rodekruis/automated-building-detection
+docker run --name automated-building-detection -dit -v <path-to-your-workspace>:/workdir -p 5000:5000 rodekruis/automated-building-detection
 ```
 4. Access the container
 ```
