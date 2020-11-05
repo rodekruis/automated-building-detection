@@ -1,17 +1,13 @@
 # neat-EO
 
-Unofficial copy of neat-EO repo (https://neat-eo.pink/, https://pypi.org/project/neat-EO/, https://github.com/datapink/neat-EO),
-which cannot be publicly shared on GitHub because of regulations of satellite image
-processing software.
+Computer Vision framework for GeoSpatial imagery.
+Unofficial fork of [neat-eo](https://neat-eo.pink/), built on top of [robosat.pink](https://github.com/dselivanov/robosat.pink).
 
-To make the package installable, `setup.py` has been adjusted, along with
-a rearranged file structure.
+To make the package installable, `setup.py` has been adjusted, along with a rearranged file structure.
 
 *Note*: this package is referenced as both "neat-eo" and "neo" inside this project.
 
 ## Readme from the original project:
-
----- 
 
 ## Documentation:
 Tools:
@@ -21,12 +17,12 @@ Tools:
 1. `neo rasterize` Rasterize vector features (GeoJSON or PostGIS), to raster tiles
 1. `neo subset` Filter images in a slippy map dir using a csv tiles cover
 1. `neo tile` Tile a raster coverage
-1. `neo train` Trains a model on a dataset
-1. `neo eval` Evals a model on a dataset
+1. `neo train` Train a model on a dataset
+1. `neo eval` Evaluate a model on a dataset
 1. `neo export` Export a model to ONNX or Torch JIT
 1. `neo predict` Predict masks, from a dataset, with an already trained model
 1. `neo compare` Compute composite images and/or metrics to compare several slippy map dirs
-1. `neo vectorize` Extract GeoJSON features from predicted masks
+1. `neo vectorize` Vectorize output: extract GeoJSON features from predicted masks
 1. `neo info` Print neat-EO version informations
 
 ## Requirements:
