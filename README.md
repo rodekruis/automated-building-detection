@@ -50,7 +50,27 @@ docker exec -it automated-building-detection bash
 ```
 
 ### Manual Setup
-TBI
+1. Install Python 3.7 and [pip](https://pypi.org/project/pip/)
+2. Install [Anaconda](https://www.anaconda.com/products/individual)
+3. Create a new Anaconda environment
+```
+conda create --name abdenv python=3.7 
+```
+4. Activate it
+```
+conda activate abdenv
+```
+5. From root directory, move to `abd_utils` and install
+```
+cd abd_utils
+pip install .
+```
+6. Move to `abd_model` and install
+```
+cd ../abd_model
+pip install .
+```
+N.B. Remember to activate `abdenv` for future usage
 
 ## End-to-end example
 How to use these tools? We take as example [a small Dutch town](https://en.wikipedia.org/wiki/Giethoorn); to predict the buildings in another area, simply change the input AOI (you can create your own using e.g. [geojson.io](http://geojson.io/)).
