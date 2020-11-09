@@ -33,6 +33,9 @@ To run the building detection models:
 * GPU with VRAM >= 8 GB
 * [NVIDIA GPU Drivers](https://www.nvidia.com/Download/index.aspx) and [NVIDIA CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit)
 
+If using Docker
+* [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html), to expose the GPUs to the docker container
+
 ## Getting started
 ### Using Docker
 1. Install [Docker](https://www.docker.com/get-started).
@@ -42,7 +45,7 @@ docker pull rodekruis/automated-building-detection
 ```
 3. Create a docker container and connect it to a local directory (`<path-to-your-workspace>`)
 ```
-docker run --name automated-building-detection -dit -v <path-to-your-workspace>:/workdir -p 5000:5000 rodekruis/automated-building-detection
+docker run --name automated-building-detection -dit -v <path-to-your-workspace>:/workdir --ipc=host --gpus all -p 5000:5000 rodekruis/automated-building-detection
 ```
 4. Access the container
 ```
