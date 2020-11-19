@@ -17,19 +17,22 @@ def main(images, output):
     list_tiles = os.listdir(images)
     list_tiles = [x for x in list_tiles if x.endswith(".png")]
 
-    for file in tqdm(list_tiles):
+    for num, file in enumerate(tqdm(list_tiles)):
         # create new directory
         zoom, x, y, ext = file.split('.')
         os.makedirs(os.path.join(output, 'images', zoom), exist_ok=True)
         os.makedirs(os.path.join(output, 'images', zoom, x), exist_ok=True)
-        # save as tiff
-        im = Image.open(os.path.join(images, file))
-        im_resized = im.resize((512, 512))
-        im_resized.save(os.path.join(output, 'images', zoom, x, y + '.tiff'))
+        if not os.path.exists(os.path.join(output, 'images', zoom, x, y + '.tiff')):
+            # save as tiff
+            im = Image.open(os.path.join(images, file))
+            im_resized = im.resize((512, 512))
+            im_resized.save(os.path.join(output, 'images', zoom, x, y + '.tiff'))
         # add to cover
         cover = cover.append(pd.Series({'x': x,
                                         'y': y,
                                         'z': zoom}), ignore_index=True)
+        if num % 1000 == 0:
+            cover.to_csv(os.path.join(output, 'cover.csv'), header=False, index=False)
     # save cover
     cover.to_csv(os.path.join(output, 'cover.csv'), header=False, index=False)
 
