@@ -1,6 +1,9 @@
 import geopandas as gpd
 import click
+import math
+from tqdm import tqdm
 
+SPLIT_SIZE = 500
 
 @click.command()
 @click.option('--data', help='input (vector format)')
@@ -14,6 +17,28 @@ def main(data, dest, crsmeters, area):
     crs_original = gdf.crs
 
     # merge touching buildings
+    if len(gdf)>SPLIT_SIZE:
+        print(f'pre-processing ({len(gdf)} entries)')
+        list_gdfs = [gdf[x*SPLIT_SIZE:(x+1)*SPLIT_SIZE] for x in range(math.ceil(len(gdf)/SPLIT_SIZE))]
+        gdf = gpd.GeoDataFrame()
+        for gdf_ in tqdm(list_gdfs):
+            df_sj = gpd.sjoin(gdf_, gdf_, how='left', op='intersects')
+            df_sj = df_sj.reset_index().rename(columns={'index': 'index_left'})
+            num_disj = len(df_sj[df_sj['index_left'] != df_sj['index_right']])
+            while num_disj > 0:
+                df_sj = df_sj.dissolve(by='index_right').rename_axis(index={'index_right': 'index'})
+                df_sj = df_sj.drop_duplicates(subset=['geometry'])
+                df_sj = df_sj[['geometry']]
+                df_sj = gpd.sjoin(df_sj, df_sj, how='left', op='intersects')
+                df_sj = df_sj.reset_index().rename(columns={'index': 'index_left'})
+                num_disj = len(df_sj[df_sj['index_left'] != df_sj['index_right']])
+            gdf = gdf.append(df_sj.copy(), ignore_index=True)
+        gdf = gdf.drop(columns=['index_left', 'index_right'])
+        print(f'done ({len(gdf)} entries)')
+        print(f'saving intermediate')
+        gdf.to_file(dest, driver='GeoJSON')
+
+    print('trying to merge all')
     df_sj = gpd.sjoin(gdf, gdf, how='left', op='intersects')
     df_sj = df_sj.reset_index().rename(columns={'index': 'index_left'})
     num_disj = len(df_sj[df_sj['index_left'] != df_sj['index_right']])
