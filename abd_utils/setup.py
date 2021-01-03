@@ -28,7 +28,8 @@ setuptools.setup(
         'console_scripts': [
             f"download-images = {PROJECT_NAME}.download_images:main",
             f"filter-buildings = {PROJECT_NAME}.filter_buildings:main",
-            f"images-to-abd = {PROJECT_NAME}.images_to_abd:main"
+            f"images-to-abd = {PROJECT_NAME}.images_to_abd:main",
+            f"add-osm-data = {PROJECT_NAME}.add_osm_data:main"
         ]
     }
 )

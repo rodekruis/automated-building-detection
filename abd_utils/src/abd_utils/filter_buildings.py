@@ -2,19 +2,20 @@ import geopandas as gpd
 import click
 import math
 from tqdm import tqdm
+import os
 
-SPLIT_SIZE = 500
+SPLIT_SIZE = 1000
 
 @click.command()
 @click.option('--data', help='input (vector format)')
 @click.option('--dest', help='output (vector format)')
 @click.option('--crsmeters', default='EPSG:4087', help='CRS in unit meters, to filter small buildings [default: EPSG:4087]')
+@click.option('--waterbodies', default='', help='vector file of water bodies, to filter artifacts')
 @click.option('--area', default=10, help='minimum building area, in m2 [default: 10]')
-def main(data, dest, crsmeters, area):
+def main(data, dest, crsmeters, waterbodies, area):
     """ merge touching buildings, filter small ones, simplify geometry """
 
     gdf = gpd.read_file(data)
-    crs_original = gdf.crs
 
     # merge touching buildings
     if len(gdf)>SPLIT_SIZE:
@@ -38,7 +39,7 @@ def main(data, dest, crsmeters, area):
         print(f'saving intermediate')
         gdf.to_file(dest, driver='GeoJSON')
 
-    print('trying to merge all')
+    print('merging all')
     df_sj = gpd.sjoin(gdf, gdf, how='left', op='intersects')
     df_sj = df_sj.reset_index().rename(columns={'index': 'index_left'})
     num_disj = len(df_sj[df_sj['index_left'] != df_sj['index_right']])
@@ -51,20 +52,32 @@ def main(data, dest, crsmeters, area):
         num_disj = len(df_sj[df_sj['index_left'] != df_sj['index_right']])
     gdf = df_sj.copy()
 
-    # convert to CRS with unit meters
-    gdf = gdf.to_crs(crsmeters)
-    gdf = gdf[['geometry']]
-
     # filter small stuff
+    crs_original = gdf.crs
+    gdf = gdf.to_crs(crsmeters)
     gdf['area'] = gdf['geometry'].area
     gdf = gdf[gdf.area > area]
     gdf = gdf[['geometry']]
 
     # simplify geometry
     gdf = gdf.simplify(tolerance=1., preserve_topology=True)
-
-    # reproject to original CRS and save
     gdf = gdf.to_crs(crs_original)
+    gdf = gpd.GeoDataFrame(geometry=gdf)
+    gdf = gdf[~(gdf.geometry.is_empty | gdf.geometry.isna())]
+
+    # filter by water bodies
+    if os.path.exists(waterbodies):
+        print('filtering by water bodies')
+        gdf_water = gpd.read_file(waterbodies)
+        if gdf.crs != gdf_water.crs:
+            gdf = gdf.to_crs(gdf_water.crs)
+        gdf = gpd.sjoin(gdf, gdf_water, how='left', op='intersects')
+        gdf = gdf[gdf['TYPE'].isna()]
+        gdf = gdf[['geometry']]
+
+    # project to WGS84 and save
+    if gdf.crs != "EPSG:4326":
+        gdf = gdf.to_crs("EPSG:4326")
     gdf.to_file(dest, driver='GeoJSON')
 
 
