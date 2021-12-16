@@ -70,13 +70,13 @@ def geojson_srid(feature_collection):
     return srid
 
 
-def geojson_tile_burn(tile, features, srid, ts, burn_value=1):
+def geojson_tile_burn(tile, features, srid, ts, burn_value=1, all_touched = False):
     """Burn tile with GeoJSON features."""
 
     crs = (CRS.from_epsg(srid), CRS.from_epsg(3857))
     shapes = ((transform_geom(*crs, feature["geometry"]), burn_value) for feature in features)
 
     try:
-        return rasterize(shapes, out_shape=ts, transform=from_bounds(*tile_bbox(tile, mercator=True), *ts))
+        return rasterize(shapes, out_shape=ts, transform=from_bounds(*tile_bbox(tile, mercator=True), *ts), all_touched = all_touched)
     except:
         return None
