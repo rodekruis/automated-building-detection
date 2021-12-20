@@ -95,9 +95,9 @@ class InstSeg(torch.utils.data.Dataset):
             weight = self.tiles_weights[tile] if self.tiles_weights is not None and tile in self.tiles_weights else 1.0
 
             image, mask, mask_border = to_tensor_instseg(self.config, self.shape_in[1:3], image, mask=mask, border_mask=mask_border, da=self.da)
-            return image, mask, mask_border
-            # mask = stack((mask, mask_border), axis=-1)
-            # return image, mask, tile, weight
+
+            mask = stack((mask, mask_border), axis=-1)
+            return image, mask, tile, weight
 
         if self.mode in ["predict"]:
             image = to_tensor(self.config, self.shape_in[1:3], image, resize=False, da=False)
