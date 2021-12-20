@@ -194,8 +194,8 @@ def main(args):
                     else:
                         intersections = find_building_intersections(out)
                         labelled_intersections, num = ndimage.label(intersections)
-                        augmented_intersections = augment_borders(intersections, burn_value=burn_value)
-                        out = augmented_intersections
+                        augmented_intersections = augment_borders(intersections, burn_value=burn_value if args.append else 1)
+                        out = np.uint8(augmented_intersections)
 
             if not geojson or out is None:
                 num = 0
