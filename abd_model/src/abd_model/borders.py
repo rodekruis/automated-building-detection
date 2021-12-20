@@ -11,15 +11,15 @@ def find_building_intersections(raster_list):
     return np.sum(np.array(all_intersections), axis=0)
 
 
-def augment_borders(matrix):
+def augment_borders(matrix, burn_value=1):
     original_matrix = matrix.copy()
     matrix = np.pad(matrix, pad_width=1)
     borders_indices = matrix.nonzero()
 
     i = borders_indices[0]
     j = borders_indices[1]
-    matrix[i + 1, j] = matrix[i + 1, j + 1] = matrix[i, j + 1] = matrix[i - 1, j + 1] = matrix[i - 1, j] = matrix[
-        i - 1, j - 1] = matrix[i, j - 1] = matrix[i + 1, j - 1] = 1
+    matrix[i, j] = matrix[i + 1, j] = matrix[i + 1, j + 1] = matrix[i, j + 1] = matrix[i - 1, j + 1] = matrix[i - 1, j] = matrix[
+        i - 1, j - 1] = matrix[i, j - 1] = matrix[i + 1, j - 1] = burn_value
 
     matrix = crop(matrix, crop_width=1)
 

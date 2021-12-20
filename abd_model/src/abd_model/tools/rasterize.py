@@ -16,7 +16,7 @@ from scipy import ndimage
 from abd_model.core import load_config, check_classes, make_palette, web_ui, Logs
 from abd_model.tiles import tiles_from_csv, tile_label_to_file, tile_bbox
 from abd_model.geojson import geojson_srid, geojson_tile_burn, geojson_parse_feature
-from abd_mode.borders import find_building_intersections, augment_borders
+from abd_model.borders import find_building_intersections, augment_borders
 
 def add_parser(subparser, formatter_class):
     parser = subparser.add_parser(
@@ -188,11 +188,14 @@ def main(args):
                 else:
                     out = []
                     for building in geojson:
-                        out.append(geojson_tile_burn(tile, [building], 4326, resolution, 1))
-                    intersections = find_building_intersections(out)
-                    labelled_intersections, num = ndimage.label(intersections)
-                    augmented_intersections = augment_borders(intersections)
-                    out = augmented_intersections
+                        out.append(geojson_tile_burn(tile, [building], 4326, list(map(int, args.ts.split(","))), burn_value, all_touched = args.borders))
+                    if len(out) <= 1:
+                        out = None
+                    else:
+                        intersections = find_building_intersections(out)
+                        labelled_intersections, num = ndimage.label(intersections)
+                        augmented_intersections = augment_borders(intersections, burn_value=burn_value)
+                        out = augmented_intersections
 
             if not geojson or out is None:
                 num = 0
