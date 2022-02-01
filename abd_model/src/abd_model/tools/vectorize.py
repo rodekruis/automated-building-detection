@@ -21,6 +21,7 @@ def add_parser(subparser, formatter_class):
     inp.add_argument("--masks", type=str, required=True, help="input masks directory path [required]")
     inp.add_argument("--type", type=str, required=True, help="type of features to extract (i.e class title) [required]")
     inp.add_argument("--config", type=str, help="path to config file [required, if no global config setting]")
+    inp.add_argument("--buildings_only", action="store_true", help="whether to vectorize buildings only, to use on predicted masks for buildings-borders model")
 
     out = parser.add_argument_group("Outputs")
     out.add_argument("--out", type=str, required=True, help="path to output file to store features in [required]")
@@ -32,6 +33,8 @@ def main(args):
     config = load_config(args.config)
     check_classes(config)
     index = [i for i in (list(range(len(config["classes"])))) if config["classes"][i]["title"] == args.type]
+    if index == [1] and args.buildings_only:
+        index = [1,3]
     assert index, "Requested type {} not found among classes title in the config file.".format(args.type)
 
     masks = list(tiles_from_dir(args.masks, xyz_path=True))
@@ -48,7 +51,7 @@ def main(args):
 
     first = True
     for tile, path in tqdm(masks, ascii=True, unit="mask"):
-        mask = (np.array(Image.open(path).convert("P"), dtype=np.uint8) == index).astype(np.uint8)
+        mask = np.isin(np.array(Image.open(path).convert("P"), dtype=np.uint8), index).astype(np.uint8)
         try:
             C, W, H = mask.shape
         except:
