@@ -27,10 +27,9 @@ abd separate --masks abd_predictions --config config.toml --out abd-predictions-
 ```
 abd vectorize --config input/config.toml --type Building --masks abd-predictions-separated --out abd-predictions/buildings-separated.geojson
 ```
-8. Merge touching polygons, remove small artifacts, simplify geometry
+8. represent separated buildings with squares/circles around the building centroids, with areas proportional to the polygon area. The building centers will be overlapped with the original model output in the final visualization.
 ```
-filter-buildings --data abd-predictions/buildings-separated.geojson --dest abd-predictions-separated/buildings-clean.geojson
-```
+filter-buildings --data abd-predictions/buildings-separated.geojson --dest abd-predictions/buildings-separated-markers.geojson --building_markers y --marker square```
 
 ## Model collection
 * [neat-fullxview-epoch100](https://rodekruis.sharepoint.com/sites/510-Team/_layouts/15/guestaccess.aspx?docid=0f686f33162d34f6a8e810b9d8f43e3fa&authkey=ATiMPAT4k1TbJcMOBY-IbhM&expiration=2023-01-25T00%3A00%3A00.000Z&e=U3AZ9C): 
