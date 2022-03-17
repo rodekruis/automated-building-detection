@@ -86,7 +86,7 @@ download-images --aoi input/AOI.geojson --output bing-images
 ```
 images-to-abd --images bing-images/images --output abd-input
 ```
-4. [Download a pre-trained model](https://rodekruis.sharepoint.com/sites/510-Team/_layouts/15/guestaccess.aspx?docid=048f1927be4af4bc09805be0cfc376b22&authkey=AZSnVN8hrbj9CYSV8K-wg9o&expiration=2021-08-08T22%3A00%3A00.000Z&e=VIywGA) (more details below) and add it to the `input` directory
+4. [Download a pre-trained model](https://drive.google.com/file/d/1pMkrBjdpmOgT_MzqZSLHvmQDsZNM_Lwo/view?usp=sharing) (more details below) and add it to the `input` directory
 5. Run the building detection model 
 ```
 abd predict --config input/config.toml --dataset abd-input --cover abd-input/cover.csv --checkpoint input/neat-fullxview-epoch75.pth --out abd-predictions --metatiles --keep_borders
