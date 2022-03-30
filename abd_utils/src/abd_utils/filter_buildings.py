@@ -18,8 +18,9 @@ SPLIT_SIZE = 1000
 @click.option('--area', default=10, help='minimum building area, in m2 [default: 10]')
 @click.option('--building_markers', default=False, type=bool, help='replace buildings with a circle marker with same area')
 @click.option('--marker', default='circle', help='geometry of the building marker polygon')
+@click.option('--ada', default=False, type=bool, help='replace buildings with their envelope, to be used as input for ada model')
 
-def main(data, dest, crsmeters, waterbodies, area, building_markers, marker):
+def main(data, dest, crsmeters, waterbodies, area, building_markers, marker, ada):
     """ merge touching buildings, filter small ones, simplify geometry """
     # shapely.speedups.disable()
     # start = datetime.now()
@@ -27,7 +28,7 @@ def main(data, dest, crsmeters, waterbodies, area, building_markers, marker):
     # print(datetime.now() - start)
 
     # merge touching buildings
-    if len(gdf)>SPLIT_SIZE and not building_markers:
+    if len(gdf)>SPLIT_SIZE and (not building_markers and not ada):
         print(f'pre-processing ({len(gdf)} entries)')
         list_gdfs = [gdf[x*SPLIT_SIZE:(x+1)*SPLIT_SIZE] for x in range(math.ceil(len(gdf)/SPLIT_SIZE))]
         gdf = gpd.GeoDataFrame()
@@ -48,7 +49,7 @@ def main(data, dest, crsmeters, waterbodies, area, building_markers, marker):
         print(f'saving intermediate')
         gdf.to_file(dest, driver='GeoJSON')
 
-    if not building_markers:
+    if not building_markers and not ada:
         print('merging all')
         df_sj = gpd.sjoin(gdf, gdf, how='left', op='intersects')
         df_sj = df_sj.reset_index().rename(columns={'index': 'index_left'})
@@ -92,6 +93,12 @@ def main(data, dest, crsmeters, waterbodies, area, building_markers, marker):
             gdf = gdf.centroid.buffer(np.sqrt(gdf.area)/2, cap_style=3)
         else:
             print("no supported markers")
+        gdf = gdf.to_crs(crs_original)
+
+    elif ada:
+        crs_original = gdf.crs
+        gdf = gdf.to_crs(crsmeters)
+        gdf = gdf.envelope
         gdf = gdf.to_crs(crs_original)
 
     # project to WGS84 and save
