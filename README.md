@@ -15,7 +15,7 @@ Automated Building Detection using Deep Learning: a NLRC/510 tool
 ## Credits
 Built on top of [robosat](https://github.com/mapbox/robosat) and [robosat.pink](https://github.com/acannistra/robosat.pink).
 
-Development: [Ondrej Zacha](https://github.com/ondrejzacha), [Wessel de Jong](https://github.com/Wessel93), [Jacopo Margutti](https://github.com/jmargutt)
+Development: [Ondrej Zacha](https://github.com/ondrejzacha), [Wessel de Jong](https://github.com/Wessel93), [Alberto Bracci](https://alberto-bracci.github.io), [Jacopo Margutti](https://github.com/jmargutt)
 
 Contact: [Jacopo Margutti](mailto:jmargutti@redcross.nl).
 
